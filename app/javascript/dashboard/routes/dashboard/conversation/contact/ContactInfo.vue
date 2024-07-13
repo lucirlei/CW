@@ -252,11 +252,7 @@ export default {
         screen_name: twitterScreenName,
       } = this.additionalAttributes;
 
-      return {
-        twitter: twitterScreenName,
-        phone: this.contact.phone_number,
-        ...(socialProfiles || {}),
-      };
+      return { twitter: twitterScreenName, ...(socialProfiles || {}) };
     },
     // Delete Modal
     confirmDeleteMessage() {

@@ -111,9 +111,9 @@ gem 'elastic-apm', require: false
 gem 'newrelic_rpm', require: false
 gem 'newrelic-sidekiq-metrics', '>= 1.6.2', require: false
 gem 'scout_apm', require: false
-gem 'sentry-rails', '>= 5.14.0', require: false
+gem 'sentry-rails', '>= 5.18.0', require: false
 gem 'sentry-ruby', require: false
-gem 'sentry-sidekiq', '>= 5.15.0', require: false
+gem 'sentry-sidekiq', '>= 5.18.0', require: false
 
 ##-- background job processing --##
 gem 'sidekiq', '>= 7.2.4'
@@ -154,8 +154,6 @@ gem 'stripe'
 ## - helper gems --##
 ## to populate db with sample data
 gem 'faker'
-
-gem 'phonelib'
 
 # Include logrange conditionally in intializer using env variable
 gem 'lograge', '~> 0.14.0', require: false

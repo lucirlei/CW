@@ -6,7 +6,7 @@
   >
     <div :class="wrapClass">
       <div
-        v-if="isFailed && !data.source_id && !hasOneDayPassed && !isAnEmailInbox"
+        v-if="isFailed && !hasOneDayPassed && !isAnEmailInbox"
         class="message-failed--alert"
       >
         <woot-button
@@ -112,7 +112,7 @@
         <woot-thumbnail
           :src="sender.thumbnail"
           :username="senderNameForAvatar"
-          size="25px"
+          size="16px"
         />
         <a
           v-if="isATweet && isIncoming"

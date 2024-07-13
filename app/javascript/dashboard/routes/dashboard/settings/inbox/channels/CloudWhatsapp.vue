@@ -110,7 +110,6 @@ export default {
       apiKey: '',
       phoneNumberId: '',
       businessAccountId: '',
-      advanced: false,
     };
   },
   computed: {
@@ -122,7 +121,6 @@ export default {
     apiKey: { required },
     phoneNumberId: { required, isNumber },
     businessAccountId: { required, isNumber },
-    url: { required },
   },
   methods: {
     async createChannel() {
@@ -158,9 +156,7 @@ export default {
         });
       } catch (error) {
         this.showAlert(
-          error.message || this.$t('INBOX_MGMT.ADD.WHATSAPP.API.ERROR_MESSAGE') +
-            '\n detail:' +
-            error
+          error.message || this.$t('INBOX_MGMT.ADD.WHATSAPP.API.ERROR_MESSAGE')
         );
       }
     },

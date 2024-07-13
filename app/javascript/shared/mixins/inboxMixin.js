@@ -9,7 +9,6 @@ export const INBOX_TYPES = {
   TELEGRAM: 'Channel::Telegram',
   LINE: 'Channel::Line',
   SMS: 'Channel::Sms',
-  NOTIFICA_ME: 'Channel::NotificaMe',
 };
 
 export const INBOX_FEATURES = {
@@ -27,7 +26,6 @@ export const INBOX_FEATURE_MAP = {
     INBOX_TYPES.WHATSAPP,
     INBOX_TYPES.TELEGRAM,
     INBOX_TYPES.API,
-    INBOX_TYPES.NOTIFICA_ME,
   ],
   [INBOX_FEATURES.REPLY_TO_OUTGOING]: [
     INBOX_TYPES.WEB,
@@ -35,7 +33,6 @@ export const INBOX_FEATURE_MAP = {
     INBOX_TYPES.WHATSAPP,
     INBOX_TYPES.TELEGRAM,
     INBOX_TYPES.API,
-    INBOX_TYPES.NOTIFICA_ME,
   ],
 };
 
@@ -77,9 +74,6 @@ export default {
     isATelegramChannel() {
       return this.channelType === INBOX_TYPES.TELEGRAM;
     },
-    isANotificaMeChannel() {
-      return this.channelType === INBOX_TYPES.NOTIFICA_ME;
-    },
     isATwilioSMSChannel() {
       const { medium: medium = '' } = this.inbox;
       return this.isATwilioChannel && medium === 'sms';
@@ -95,12 +89,6 @@ export default {
       return (
         this.channelType === INBOX_TYPES.WHATSAPP &&
         this.whatsAppAPIProvider === 'whatsapp_cloud'
-      );
-    },
-    isAUnoapiChannel() {
-      return (
-        this.channelType === INBOX_TYPES.WHATSAPP &&
-        this.whatsAppAPIProvider === 'unoapi'
       );
     },
     is360DialogWhatsAppChannel() {

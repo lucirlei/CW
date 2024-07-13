@@ -177,7 +177,6 @@ export default {
       dragEnabled: true,
       conversationSidebarItems: [],
       dragging: false,
-      loadingContactDetails: false,
     };
   },
   computed: {
@@ -231,11 +230,8 @@ export default {
       this.onToggle();
     },
     getContactDetails() {
-      if (this.contactId && !this.loadingContactDetails) {
-        this.loadingContactDetails = true;
-        this.$store.dispatch('contacts/show', { id: this.contactId }).then(() => {
-          this.loadingContactDetails = false;
-        });
+      if (this.contactId) {
+        this.$store.dispatch('contacts/show', { id: this.contactId });
       }
     },
     getAttributesByModel() {

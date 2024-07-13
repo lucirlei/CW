@@ -19,12 +19,6 @@
       @close="onCloseTranslateModal"
     />
     <!-- Confirm Deletion -->
-    <!-- Forward Content -->
-    <forward-modal
-      v-if="showForwardModal"
-      :message="message"
-      @close="onCloseForwardModal"
-    />
     <woot-delete-modal
       v-if="showDeleteModal"
       class="context-menu--delete-modal"
@@ -77,14 +71,6 @@
           variant="icon"
           @click="handleTranslate"
         />
-        <menu-item
-          :option="{
-            icon: 'share',
-            label: 'Encaminhar',
-          }"
-          variant="icon"
-          @click="handleForward"
-        />
         <hr />
         <menu-item
           :option="{
@@ -103,17 +89,16 @@
           variant="icon"
           @click="showCannedResponseModal"
         />
-        <template v-if="canDeleteMessage()">
-          <hr />
-          <menu-item
-            :option="{
-              icon: 'delete',
-              label: this.$t('CONVERSATION.CONTEXT_MENU.DELETE'),
-            }"
-            variant="icon"
-            @click="openDeleteModal"
-          />
-        </template>
+        <hr v-if="enabledOptions['delete']" />
+        <menu-item
+          v-if="enabledOptions['delete']"
+          :option="{
+            icon: 'delete',
+            label: $t('CONVERSATION.CONTEXT_MENU.DELETE'),
+          }"
+          variant="icon"
+          @click="openDeleteModal"
+        />
       </div>
     </woot-context-menu>
   </div>
@@ -121,7 +106,6 @@
 <script>
 import alertMixin from 'shared/mixins/alertMixin';
 import { mapGetters } from 'vuex';
-import adminMixin from 'dashboard/mixins/isAdmin';
 import messageFormatterMixin from 'shared/mixins/messageFormatterMixin';
 import AddCannedModal from 'dashboard/routes/dashboard/settings/canned/AddCanned.vue';
 import { copyTextToClipboard } from 'shared/helpers/clipboard';
@@ -132,16 +116,14 @@ import {
 } from '../../../helper/AnalyticsHelper/events';
 import TranslateModal from 'dashboard/components/widgets/conversation/bubble/TranslateModal.vue';
 import MenuItem from '../../../components/widgets/conversation/contextMenu/menuItem.vue';
-import ForwardModal from 'dashboard/components/widgets/conversation/bubble/ForwardModal.vue';
 
 export default {
   components: {
     AddCannedModal,
     TranslateModal,
     MenuItem,
-    ForwardModal,
   },
-  mixins: [alertMixin, messageFormatterMixin, adminMixin],
+  mixins: [alertMixin, messageFormatterMixin],
   props: {
     message: {
       type: Object,
@@ -165,14 +147,12 @@ export default {
       isCannedResponseModalOpen: false,
       showTranslateModal: false,
       showDeleteModal: false,
-      showForwardModal: false,
     };
   },
   computed: {
     ...mapGetters({
       getAccount: 'accounts/getAccount',
       currentAccountId: 'getCurrentAccountId',
-      currentChat: 'getSelectedChat',
     }),
     plainTextContent() {
       return this.getPlainText(this.messageContent);
@@ -188,12 +168,6 @@ export default {
     },
     contentAttributes() {
       return this.message.content_attributes;
-    },
-    inboxId() {
-      return this.currentChat.inbox_id;
-    },
-    inbox() {
-      return this.$store.getters['inboxes/getInbox'](this.inboxId);
     },
   },
   methods: {
@@ -267,21 +241,6 @@ export default {
     },
     closeDeleteModal() {
       this.showDeleteModal = false;
-    },
-    canDeleteMessage() {
-      if (this.isAdmin) {
-        return this.enabledOptions.delete;
-      }
-      return (
-        this.enabledOptions.delete && this.inbox.allow_agent_to_delete_message
-      );
-    },
-    handleForward() {
-      this.handleClose();
-      this.showForwardModal = true;
-    },
-    onCloseForwardModal() {
-      this.showForwardModal = false;
     },
   },
 };

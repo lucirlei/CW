@@ -20,7 +20,7 @@
         @click="onToggleContactPanel"
       />
     </div>
-    <ul class="conversation-panel" :style="globalConfig.conversationStyleCss">
+    <ul class="conversation-panel">
       <transition name="slide-up">
         <li class="min-h-[4rem]">
           <span v-if="shouldShowSpinner" class="spinner message" />
@@ -118,7 +118,6 @@ import inboxMixin, { INBOX_FEATURES } from 'shared/mixins/inboxMixin';
 import configMixin from 'shared/mixins/configMixin';
 import keyboardEventListenerMixins from 'shared/mixins/keyboardEventListenerMixins';
 import aiMixin from 'dashboard/mixins/aiMixin';
-import globalConfigMixin from 'shared/mixins/globalConfigMixin';
 
 // utils
 import { getTypingUsersText } from '../../../helper/commons';
@@ -144,7 +143,6 @@ export default {
     keyboardEventListenerMixins,
     configMixin,
     aiMixin,
-    globalConfigMixin,
   ],
   props: {
     isContactPanelOpen: {
@@ -181,7 +179,6 @@ export default {
       appIntegrations: 'integrations/getAppIntegrations',
       isFeatureEnabledonAccount: 'accounts/isFeatureEnabledonAccount',
       currentAccountId: 'getCurrentAccountId',
-      globalConfig: 'globalConfig/get',
     }),
     isOpen() {
       return this.currentChat?.status === wootConstants.STATUS_TYPE.OPEN;
