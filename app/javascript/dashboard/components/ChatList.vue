@@ -10,6 +10,7 @@
     <chat-list-header
       :page-title="pageTitle"
       :has-applied-filters="hasAppliedFilters"
+      :has-hide-filters-for-agents="hideFiltersForAgents"
       :has-active-folders="hasActiveFolders"
       :active-status="activeStatus"
       @add-folders="onClickOpenAddFoldersModal"
@@ -284,7 +285,35 @@ export default {
       labels: 'labels/getLabels',
       selectedConversations: 'bulkActions/getSelectedConversationIds',
       contextMenuChatId: 'getContextMenuChatId',
+      isFeatureEnabledonAccount: 'accounts/isFeatureEnabledonAccount',
+      currentRole: 'getCurrentRole',
+      accountId: 'getCurrentAccountId',
     }),
+    hideAllChatsForAgents() {
+      return (
+        this.isFeatureEnabledonAccount(
+          this.accountId,
+          'hide_all_chats_for_agent'
+        ) && this.currentRole !== 'administrator'
+      );
+    },
+    // Adicionar la función hideUnassignedForAgents
+    hideUnassignedForAgents() {
+      return (
+        this.isFeatureEnabledonAccount(
+          this.accountId,
+          'hide_unassigned_for_agent'
+        ) && this.currentRole !== 'administrator'
+      );
+    },
+    hideFiltersForAgents() {
+      return (
+        this.isFeatureEnabledonAccount(
+          this.accountId,
+          'hide_filters_for_agent'
+        ) && this.currentRole !== 'administrator'
+      );
+    },
     hasAppliedFilters() {
       return this.appliedFilters.length !== 0;
     },
@@ -293,6 +322,13 @@ export default {
     },
     hasAppliedFiltersOrActiveFolders() {
       return this.hasAppliedFilters || this.hasActiveFolders;
+    },
+    savedFoldersValue() {
+      if (this.hasActiveFolders) {
+        const payload = this.activeFolder.query;
+        this.fetchSavedFilteredConversations(payload);
+      }
+      return {};
     },
     showEndOfListMessage() {
       return (
@@ -311,9 +347,17 @@ export default {
     assigneeTabItems() {
       const ASSIGNEE_TYPE_TAB_KEYS = {
         me: 'mineCount',
-        unassigned: 'unAssignedCount',
-        all: 'allCount',
+        // Ocultar la pestaña unassigned
+        //unassigned: 'unAssignedCount',
+        //all: 'allCount',
       };
+      // Mostrar la pestaña unassigned si se cumple la condición
+      if (!this.hideUnassignedForAgents) {
+        ASSIGNEE_TYPE_TAB_KEYS.unassigned = 'unAssignedCount';
+      }
+      if (!this.hideAllChatsForAgents) {
+        ASSIGNEE_TYPE_TAB_KEYS.all = 'allCount';
+      }
       return Object.keys(ASSIGNEE_TYPE_TAB_KEYS).map(key => {
         const count = this.conversationStats[ASSIGNEE_TYPE_TAB_KEYS[key]] || 0;
         return {
@@ -369,6 +413,7 @@ export default {
         labels: this.label ? [this.label] : undefined,
         teamId: this.teamId || undefined,
         conversationType: this.conversationType || undefined,
+        folders: this.hasActiveFolders ? this.savedFoldersValue : undefined,
       };
     },
     conversationListPagination() {
@@ -506,6 +551,7 @@ export default {
   mounted() {
     this.$store.dispatch('setChatListFilters', this.conversationFilters);
     this.setFiltersFromUISettings();
+    this.initializeAccount();
     this.$store.dispatch('setChatStatusFilter', this.activeStatus);
     this.$store.dispatch('setChatSortFilter', this.activeSortBy);
     this.resetAndFetchData();
@@ -524,6 +570,14 @@ export default {
     this.$emitter.off(CMD_SNOOZE_CONVERSATION, this.onCmdSnoozeConversation);
   },
   methods: {
+    async initializeAccount() {
+      try {
+        const { features } = this.getAccount(this.accountId);
+        this.features = features;
+      } catch (error) {
+        // Ignore error
+      }
+    },
     updateVirtualListProps(key, value) {
       this.virtualListExtraProps = {
         ...this.virtualListExtraProps,
@@ -702,7 +756,7 @@ export default {
     fetchConversations() {
       this.$store.dispatch('updateChatListFilters', this.conversationFilters);
       this.$store
-        .dispatch('fetchAllConversations')
+        .dispatch('fetchAllConversations', this.conversationFilters)
         .then(this.emitConversationLoaded);
     },
     loadMoreConversations() {

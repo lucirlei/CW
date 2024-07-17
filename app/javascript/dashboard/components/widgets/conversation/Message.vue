@@ -6,7 +6,7 @@
   >
     <div :class="wrapClass">
       <div
-        v-if="isFailed && !hasOneDayPassed && !isAnEmailInbox"
+        v-if="isFailed && !data.source_id && !hasOneDayPassed && !isAnEmailInbox"
         class="message-failed--alert"
       >
         <woot-button
@@ -112,7 +112,7 @@
         <woot-thumbnail
           :src="sender.thumbnail"
           :username="senderNameForAvatar"
-          size="16px"
+          size="25px"
         />
         <a
           v-if="isATweet && isIncoming"
@@ -257,16 +257,7 @@ export default {
         html_content: { full: fullHTMLContent } = {},
         text_content: { full: fullTextContent } = {},
       } = this.contentAttributes.email || {};
-
-      if (fullHTMLContent) {
-        return fullHTMLContent;
-      }
-
-      if (fullTextContent) {
-        return fullTextContent.replace(/\n/g, '<br>');
-      }
-
-      return '';
+      return fullHTMLContent || fullTextContent || '';
     },
     displayQuotedButton() {
       if (this.emailMessageContent.includes('<blockquote')) {

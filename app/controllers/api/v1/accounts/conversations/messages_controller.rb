@@ -12,6 +12,8 @@ class Api::V1::Accounts::Conversations::MessagesController < Api::V1::Accounts::
   end
 
   def destroy
+    return head :bad_request unless message.can_delete_message?
+  
     ActiveRecord::Base.transaction do
       message.update!(content: I18n.t('conversations.messages.deleted'), content_attributes: { deleted: true })
       message.attachments.destroy_all
@@ -45,6 +47,13 @@ class Api::V1::Accounts::Conversations::MessagesController < Api::V1::Accounts::
     render json: { content: translated_content }
   end
 
+  def forward
+    ::Conversations::ForwardMessageJob.perform_later(forward_message_params)
+    head :ok
+    rescue StandardError => e
+      render e
+  end
+
   private
 
   def message
@@ -61,5 +70,14 @@ class Api::V1::Accounts::Conversations::MessagesController < Api::V1::Accounts::
 
   def already_translated_content_available?
     message.translations.present? && message.translations[permitted_params[:target_language]].present?
+  end
+
+  def forward_message_params
+    {
+      user_id: Current.user.id,
+      account_id: Current.account.id,
+      message_id: message.id,
+      contacts: params[:contacts]
+    }
   end
 end

@@ -175,7 +175,7 @@
   value: 'enterprise'
   description: 'The pricing plan for the installation, retrieved from the billing API'
 - name: INSTALLATION_PRICING_PLAN_QUANTITY
-  value: 20000
+  value: 10000
   description: 'The number of licenses purchased for the installation, retrieved from the billing API'
 - name: CHATWOOT_SUPPORT_WEBSITE_TOKEN
   value:
@@ -217,3 +217,10 @@
   locked: false
   description: 'Contents on your firebase credentials json file'
 ## ------ End of Configs added for FCM v1 notifications ------ ##
+
+## ------ Configs custom ------ ##
+- name: CONVESATION_STYLE_CSS
+  display_title: 'Conversation Style CSS'
+  value:
+  description: 'Customize conversation, put your valid css'
+## ------ End of Configs custom ------ ##

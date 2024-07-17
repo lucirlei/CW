@@ -39,14 +39,6 @@
                   :readable-time="readableTime"
                   @error="onImageLoadError"
                 />
-
-                <video-bubble
-                  v-if="attachment.file_type === 'video' && !hasVideoError"
-                  :url="attachment.data_url"
-                  :readable-time="readableTime"
-                  @error="onVideoLoadError"
-                />
-
                 <file-bubble
                   v-else
                   :url="attachment.data_url"
@@ -80,7 +72,6 @@
 import UserMessageBubble from 'widget/components/UserMessageBubble.vue';
 import MessageReplyButton from 'widget/components/MessageReplyButton.vue';
 import ImageBubble from 'widget/components/ImageBubble.vue';
-import VideoBubble from 'widget/components/VideoBubble.vue';
 import FluentIcon from 'shared/components/FluentIcon/Index.vue';
 import FileBubble from 'widget/components/FileBubble.vue';
 import timeMixin from 'dashboard/mixins/time';
@@ -97,7 +88,6 @@ export default {
     UserMessageBubble,
     MessageReplyButton,
     ImageBubble,
-    VideoBubble,
     FileBubble,
     FluentIcon,
     ReplyToChip,
@@ -117,7 +107,6 @@ export default {
   data() {
     return {
       hasImageError: false,
-      hasVideoError: false,
     };
   },
   computed: {
@@ -154,12 +143,10 @@ export default {
   watch: {
     message() {
       this.hasImageError = false;
-      this.hasVideoError = false;
     },
   },
   mounted() {
     this.hasImageError = false;
-    this.hasVideoError = false;
   },
   methods: {
     async retrySendMessage() {
@@ -170,9 +157,6 @@ export default {
     },
     onImageLoadError() {
       this.hasImageError = true;
-    },
-    onVideoLoadError() {
-      this.hasVideoError = true;
     },
     toggleReply() {
       this.$emitter.emit(BUS_EVENTS.TOGGLE_REPLY_TO_MESSAGE, this.message);

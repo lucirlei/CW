@@ -24,7 +24,7 @@
         "body": "Add agents to the created inbox."
       },
       {
-        "title": "Voilà!",
+        "title": "Voila!",
         "route": "settings_inbox_finish",
         "body": "You are all set to go!"
       }
@@ -224,6 +224,11 @@
           "PLACEHOLDER": "Please enter an inbox name",
           "ERROR": "This field is required"
         },
+        "URL": {
+          "LABEL": "Whatsapp Cloud API URL",
+          "PLACEHOLDER": "Please enter an Whatsapp Cloud API URL or use default https://graph.facebook.com",
+          "ERROR": "This field is required"
+        },
         "PHONE_NUMBER": {
           "LABEL": "Phone number",
           "PLACEHOLDER": "Please enter the phone number from which message will be sent.",
@@ -277,6 +282,29 @@
         "SUBMIT_BUTTON": "Create API Channel",
         "API": {
           "ERROR_MESSAGE": "We were not able to save the api channel"
+        }
+      },
+      "NOTIFICA_ME_CHANNEL": {
+        "TITLE": "NotificaMe Channel",
+        "DESC": "Integrate with NotificaMe Hub.",
+        "CHANNEL_NAME": {
+          "LABEL": "Channel Name",
+          "PLACEHOLDER": "Please enter a channel name",
+          "ERROR": "This field is required"
+        },
+        "CHANNEL": {
+          "LABEL": "Channel",
+          "SUBTITLE": "Choose channel",
+          "PLACEHOLDER": "Choose a channel, if empty, put the channel token first"
+        },
+        "CHANNEL_TOKEN": {
+          "LABEL": "Channel Token",
+          "SUBTITLE": "Configure channel token",
+          "PLACEHOLDER": "Configure channel token"
+        },
+        "SUBMIT_BUTTON": "Create NotificaMe Channel",
+        "API": {
+          "ERROR_MESSAGE": "We were not able to save the NotificaMe channel"
         }
       },
       "EMAIL_CHANNEL": {
@@ -367,6 +395,7 @@
         "DESCRIPTION": "Click on the Sign in with Microsoft button to get started. You will redirected to the email sign in page. Once you accept the requested permissions, you would be redirected back to the inbox creation step.",
         "EMAIL_PLACEHOLDER": "Enter email address",
         "SIGN_IN": "Sign in with Microsoft",
+        "HELP": "To add your Microsoft account as a channel, you need to authenticate your Microsoft account by clicking on 'Sign in with Microsoft' ",
         "ERROR_MESSAGE": "There was an error connecting to Microsoft, please try again"
       },
       "GOOGLE": {
@@ -374,6 +403,7 @@
         "DESCRIPTION": "Click on the Sign in with Google button to get started. You will redirected to the email sign in page. Once you accept the requested permissions, you would be redirected back to the inbox creation step.",
         "SIGN_IN": "Sign in with Google",
         "EMAIL_PLACEHOLDER": "Enter email address",
+        "HELP": "To add your Google account as a channel, you need to authenticate your Google account by clicking on 'Sign in with Google' ",
         "ERROR_MESSAGE": "There was an error connecting to Google, please try again"
       }
     },
@@ -524,7 +554,11 @@
       "WHATSAPP_SECTION_UPDATE_BUTTON": "Update",
       "WHATSAPP_WEBHOOK_TITLE": "Webhook Verification Token",
       "WHATSAPP_WEBHOOK_SUBHEADER": "This token is used to verify the authenticity of the webhook endpoint.",
-      "UPDATE_PRE_CHAT_FORM_SETTINGS": "Update Pre Chat Form Settings"
+      "UPDATE_PRE_CHAT_FORM_SETTINGS": "Update Pre Chat Form Settings",
+      "AGENT_PERMISSIONS": "Agent Permissions",
+      "AGENT_PERMISSIONS_SUB_TEXT": "Update agent permissions for this inbox",
+      "AGENT_ALLOW_TO_DELETE_MESSAGE": "Allow an agent to delete a message",
+      "AGENT_ALLOW_TO_DELETE_MESSAGE_SUB_TEXT": "Allow an agent to delete a message from a conversation."
     },
     "HELP_CENTER": {
       "LABEL": "Help Center",

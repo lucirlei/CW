@@ -121,7 +121,7 @@ export const generateConditionOptions = (options, key = 'id') => {
 };
 
 // Add the "None" option to the agent list
-export const addNoneToList = agents => [
+export const agentList = agents => [
   {
     id: 'nil',
     name: 'None',
@@ -137,8 +137,8 @@ export const getActionOptions = ({
   type,
 }) => {
   const actionsMap = {
-    assign_agent: addNoneToList(agents),
-    assign_team: addNoneToList(teams),
+    assign_agent: agentList(agents),
+    assign_team: teams,
     send_email_to_team: teams,
     add_label: generateConditionOptions(labels, 'title'),
     remove_label: generateConditionOptions(labels, 'title'),
