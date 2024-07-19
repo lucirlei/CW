@@ -4,7 +4,7 @@
 # # and when tags are created.
 # #
 
-name: Publish Chatwoot CE docker images for AMD64
+name: Publish Chatwoot CE docker images
 on:
   push:
     branches:
@@ -17,7 +17,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    #runs-on: self-hosted
     env:
       GIT_REF: ${{ github.head_ref || github.ref_name }} # ref_name to get tags/branches
     steps:
@@ -25,11 +24,19 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v1
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3.3.0
+        uses: docker/setup-buildx-action@v1
 
+      #- name: Strip enterprise code
+      #  run: |
+      #    rm -rf enterprise
+      #    rm -rf spec/enterprise
+
+      - name: Set Chatwoot edition
+        run: |
+          echo -en '\nENV CW_EDITION="ce"' >> docker/Dockerfile
 
       - name: set docker tag
         run: |
@@ -41,12 +48,12 @@ jobs:
           echo "DOCKER_TAG=lucirleisantos/tecnohub360_cw:latest" >> $GITHUB_ENV
 
       - name: Login to DockerHub
-        uses: docker/login-action@v2
+        uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push amd64 image
+      - name: Build and push
         uses: docker/build-push-action@v2
         with:
           context: .
@@ -54,4 +61,3 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: ${{ env.DOCKER_TAG }}
-      
