@@ -8,7 +8,7 @@
       rel="noopener noreferrer nofollow"
     >
       <fluent-icon
-        :icon="profile.icon"
+        :icon="`brand-${profile.key}`"
         size="16"
         class="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
       />
@@ -27,15 +27,11 @@ export default {
   data() {
     return {
       socialMediaLinks: [
-        { key: 'facebook', icon: 'brand-facebook', link: 'https://facebook.com/' },
-        { key: 'twitter', icon: 'brand-twitter', link: 'https://twitter.com/' },
-        { key: 'linkedin', icon: 'brand-linkedin', link: 'https://linkedin.com/' },
-        { key: 'github', icon: 'brand-github', link: 'https://github.com/' },
-        { key: 'instagram', icon: 'brand-instagram', link: 'https://instagram.com/' },
-        { key: 'line', icon: 'brand-line', link: 'https://line.me/R/ti/p/~' },
-        { key: 'telegram', icon: 'brand-telegram', link: 'https://t.me/' },
-        { key: 'phone', icon: 'brand-whatsapp', link: 'https://wa.me/' },
-        { key: 'website', icon: 'globe', link: 'https://' },
+        { key: 'facebook', icon: 'facebook', link: 'https://facebook.com/' },
+        { key: 'twitter', icon: 'twitter', link: 'https://twitter.com/' },
+        { key: 'linkedin', icon: 'linkedin', link: 'https://linkedin.com/' },
+        { key: 'github', icon: 'github', link: 'https://github.com/' },
+        { key: 'instagram', icon: 'instagram', link: 'https://instagram.com/' },
       ],
     };
   },

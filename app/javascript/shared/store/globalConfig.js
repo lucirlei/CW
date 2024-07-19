@@ -20,7 +20,6 @@ const {
   WIDGET_BRAND_URL: widgetBrandURL,
   DISABLE_USER_PROFILE_UPDATE: disableUserProfileUpdate,
   DEPLOYMENT_ENV: deploymentEnv,
-  CONVESATION_STYLE_CSS: conversationStyleCss,
 } = window.globalConfig || {};
 
 const state = {
@@ -45,7 +44,6 @@ const state = {
   privacyURL,
   termsURL,
   widgetBrandURL,
-  conversationStyleCss: conversationStyleCss || '',
 };
 
 export const getters = {

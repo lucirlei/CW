@@ -117,7 +117,7 @@
     />
 
     <div class="w-full">
-      <label> Social Profiles </label>
+      <label>{{ $t('CONTACTS_PAGE.LIST.TABLE_HEADER.SOCIAL_PROFILES') }}</label>
       <div
         v-for="socialProfile in socialProfileKeys"
         :key="socialProfile.key"
@@ -125,11 +125,12 @@
       >
         <span
           class="flex items-center h-10 px-2 text-sm border-solid bg-slate-50 border-y ltr:border-l rtl:border-r ltr:rounded-l-md rtl:rounded-r-md dark:bg-slate-700 text-slate-800 dark:text-slate-100 border-slate-200 dark:border-slate-600"
-          >{{ socialProfile.label }}</span
         >
+          {{ socialProfile.prefixURL }}
+        </span>
         <input
           v-model="socialProfileUserNames[socialProfile.key]"
-          class="input-group-field ltr:rounded-l-none rtl:rounded-r-none !mb-0"
+          class="input-group-field ltr:!rounded-l-none rtl:rounded-r-none !mb-0"
           type="text"
         />
       </div>
@@ -196,20 +197,12 @@ export default {
         twitter: '',
         linkedin: '',
         github: '',
-        instagram: '',
-        line: '',
-        telegram: '',
-        website: '',
       },
       socialProfileKeys: [
-      	{ key: 'facebook', label: 'https://facebook.com/' },
-        { key: 'twitter', label: 'https://twitter.com/' },
-        { key: 'linkedin', label: 'https://linkedin.com/' },
-        { key: 'github', label: 'https://github.com/' },
-        { key: 'instagram', label: 'https://instagram.com/' },
-        { key: 'line', label: 'Line User Id ' },
-        { key: 'telegram', label: 'Telegram Username ' },
-        { key: 'website', label: 'Website: https://' },
+        { key: 'facebook', prefixURL: 'https://facebook.com/' },
+        { key: 'twitter', prefixURL: 'https://twitter.com/' },
+        { key: 'linkedin', prefixURL: 'https://linkedin.com/' },
+        { key: 'github', prefixURL: 'https://github.com/' },
       ],
     };
   },
@@ -321,9 +314,6 @@ export default {
         linkedin: socialProfiles.linkedin || '',
         github: socialProfiles.github || '',
         instagram: socialProfiles.instagram || '',
-        line: socialProfiles.line || '',
-        telegram: socialProfiles.telegram || '',
-        website: socialProfiles.website || '',
       };
     },
     getContactObject() {

@@ -22,7 +22,6 @@ pt_BR:
     reset_password_success: Legal! A solicitação de alteração de senha foi bem sucedida. Verifique seu e-mail para obter instruções.
     reset_password_failure: Uh ho! Não conseguimos encontrar nenhum usuário com o e-mail especificado.
     inbox_deletetion_response: Seu pedido de exclusão da caixa de entrada será processado dentro de algum tempo.
-
   errors:
     validations:
       presence: não pode ficar em branco
@@ -117,12 +116,11 @@ pt_BR:
         rating: Classificação
         feedback: Comentário de Feedback
         recorded_at: Data de gravação
-
   notifications:
     notification_title:
       conversation_creation: ""
       conversation_assignment: "Uma conversa (#%{display_id}) foi atribuída a você"
-      assigned_conversation_new_message: "Uma nova mensagem é criada na conversa (#%{display_id})"
+      assigned_conversation_new_message: "Uma nova mensagem foi criada na conversa (#%{display_id})"
       conversation_mention: "Você foi mencionado em uma conversa (#%{display_id})"
       sla_missed_first_response: "Primeira resposta da meta de SLA perdida para conversa (#%{display_id})"
       sla_missed_next_response: ""
@@ -211,9 +209,6 @@ pt_BR:
     openai:
       name: "OpenAI"
       description: "Integre os poderosos recursos de IA ao Chatwoot aproveitando os modelos GPT da OpenAI."
-    linear:
-      name: "Linear"
-      description: "Create Linear issues from conversations, or link existing ones for seamless tracking."
   public_portal:
     search:
       search_placeholder: Pesquisar por artigo por título ou corpo...
